@@ -1,7 +1,6 @@
 package com.thoughtworks;
 
-import main.com.thoughtworks.annotation.Named;
-import main.com.thoughtworks.mvc.model.ModelAndView;
+import com.thoughtworks.annotation.Named;
 
 public class HomeController {
 

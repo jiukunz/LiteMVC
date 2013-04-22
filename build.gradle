@@ -1,0 +1,39 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+project(":IoC") {
+    dependencies {
+        compile 'com.google.guava:guava:14.0.1'
+
+        testCompile 'junit:junit:4.11',
+                'org.mockito:mockito-all:1.9.5'
+    }
+
+}
+
+project(":MVC") {
+    dependencies {
+        compile project(':IoC')
+
+        compile 'javax.servlet:servlet-api:2.5',
+                'org.mortbay.jetty:jetty:6.1.26'
+
+        testCompile 'junit:junit:4.11',
+                'org.mockito:mockito-all:1.9.5'
+    }
+}
+
+project(":Sample") {
+    dependencies {
+        compile project(':MVC')
+
+        compile 'org.mortbay.jetty:jetty:6.1.26'
+    }
+}
+

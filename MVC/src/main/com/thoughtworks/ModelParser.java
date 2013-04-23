@@ -4,10 +4,7 @@ import com.google.common.base.Splitter;
 import com.thoughtworks.utils.StringUtils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class ModelParser {
 
@@ -22,7 +19,7 @@ public class ModelParser {
 
     }
 
-    public  HashMap<String, Object> parse(HashMap<String, String[]> params) throws Exception {
+    public  HashMap<String, Object> parse(Map<String, String[]> params) throws Exception {
 
         Set<String> keys = params.keySet();
 

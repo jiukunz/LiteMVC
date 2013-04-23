@@ -8,6 +8,10 @@ public class Address {
     public Address() {
     }
 
+    public Address(String location) {
+        this.location = location;
+    }
+
     public void setLocation(String location) {
         this.location = location;
     }

@@ -2,7 +2,7 @@ package com.thoughtworks.unit.models;
 
 import javax.tools.JavaFileManager;
 
-public class Note {
+public class Book {
     private String name;
     private Author author;
     private Double price;
@@ -15,11 +15,11 @@ public class Note {
         this.price = price;
     }
 
-    public Note() {
+    public Book() {
 
     }
 
-    public Note(String name, Author author) {
+    public Book(String name, Author author) {
         this.name = name;
         this.author = author;
     }

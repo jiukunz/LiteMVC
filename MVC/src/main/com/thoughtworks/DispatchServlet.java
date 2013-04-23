@@ -1,5 +1,6 @@
 package com.thoughtworks;
 
+import com.thoughtworks.model.ModelAndView;
 import com.thoughtworks.view.FreemarkerViewResolver;
 
 import javax.servlet.ServletException;
@@ -30,7 +31,8 @@ public class DispatchServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          viewResolver.render(null,request,response);
+
+        viewResolver.render(null,request,response);
     }
 
     @Override
@@ -43,7 +45,7 @@ public class DispatchServlet extends HttpServlet {
 
 
         //resolver(modelandview) => render
-        super.doPost(req, resp);    //To change body of overridden methods use File | Settings | File Templates.
+        super.doPost(req, resp);
     }
 }
 

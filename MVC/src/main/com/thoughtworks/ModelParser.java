@@ -12,25 +12,17 @@ import java.util.Stack;
 
 public class ModelParser {
 
-    public static ArrayList<Class> modelTypes = new ArrayList<Class>();
+    private ArrayList<Class> modelTypes = new ArrayList<Class>();
+    private String packageName;
 
-    public static void setModelTypes(Class clazz, String packageName){
+    public ModelParser(Class<?> clazz, String packageName) {
 
-        if(!clazz.toString().contains(packageName)) {
-            return;
-        }
-
-        modelTypes.add(clazz);
-        Field[] fields =  clazz.getDeclaredFields();
-
-        for(Field field : fields) {
-            modelTypes.add(field.getType());
-            setModelTypes(field.getType(), packageName);
-        }
+       this.packageName = packageName;
+       setModelTypes(clazz);
 
     }
 
-    public static HashMap<String, Object> parse(HashMap<String, String[]> params, String packageName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public  HashMap<String, Object> parse(HashMap<String, String[]> params) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         HashMap<String , Object> models = new HashMap<String, Object>();
         Set<String> keys = params.keySet();
 
@@ -70,7 +62,23 @@ public class ModelParser {
         return models;
     }
 
-    private static boolean isInModelTypes(String itemClassName) {
+    private void setModelTypes(Class clazz){
+
+        if(!clazz.toString().contains(packageName)) {
+            return;
+        }
+
+        modelTypes.add(clazz);
+        Field[] fields =  clazz.getDeclaredFields();
+
+        for(Field field : fields) {
+            modelTypes.add(field.getType());
+            setModelTypes(field.getType());
+        }
+
+    }
+
+    private  boolean isInModelTypes(String itemClassName) {
         ArrayList<String> modelTypeString = new ArrayList<String>();
 
         for (Class clazz : modelTypes) {
@@ -79,7 +87,7 @@ public class ModelParser {
         return modelTypeString.contains(itemClassName);
     }
 
-    private static HashMap<String, Object> applyAttributes(Stack items, HashMap<Object, String> valueAndName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private  HashMap<String, Object> applyAttributes(Stack items, HashMap<Object, String> valueAndName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         HashMap<String, Object> model = new HashMap<String, Object>();
 
         Object temp = items.pop();
@@ -95,7 +103,7 @@ public class ModelParser {
         return model;
     }
 
-    private static String getMethodName(String attrName) {
+    private  String getMethodName(String attrName) {
         return "set" + StringUtils.capitalize(attrName);
     }
 }

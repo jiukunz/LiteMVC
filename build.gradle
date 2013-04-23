@@ -22,7 +22,8 @@ project(":MVC") {
         compile project(':IoC')
 
         compile 'javax.servlet:servlet-api:2.5',
-                'org.mortbay.jetty:jetty:6.1.26'
+                'org.mortbay.jetty:jetty:6.1.26',
+                'freemarker:freemarker:2.3.8'
 
         testCompile 'junit:junit:4.11',
                 'org.mockito:mockito-all:1.9.5'

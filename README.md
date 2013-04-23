@@ -2,7 +2,7 @@ Model-View-Controller是面向对象的圣杯。在桌面时代MVC充分展示�
 
 功能要求
 
-1. The implementation must support model driven page render with at least one choice of template engines(JSP, FreeMarker，StringTemplate，Velocity，Mustache)
+1. The implementation must support modelMap driven page render with at least one choice of template engines(JSP, FreeMarker，StringTemplate，Velocity，Mustache)
 2. The implementation must support form submit, including nested structure.
 3. The implementation must support service injection for controller, and must use your di container you finished last round(unless the loser who choose to use Guice)
 4. The implementation must support run in a embedded web container(Grizzly, Jetty or Tomcat)

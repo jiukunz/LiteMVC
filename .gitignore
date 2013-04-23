@@ -2,4 +2,5 @@
 .gradle/
 LiteMVC.i*
 *.iml
-out/*
+out/
+

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import static com.google.common.collect.Maps.newHashMap;
 
-abstract class AbstractModule implements IModule {
+public abstract class AbstractModule implements IModule {
     private Map<Class<?>, Class<?>> classMap = newHashMap();
 
     public abstract void config();

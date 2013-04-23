@@ -1,10 +1,9 @@
 package com.thoughtworks;
 
 import com.google.common.base.Splitter;
-import com.sun.xml.internal.ws.util.StringUtils;
+import com.thoughtworks.utils.StringUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -23,7 +22,7 @@ public class ModelParser {
 
     }
 
-    public  HashMap<String, Object> parse(HashMap<String, String[]> params) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public  HashMap<String, Object> parse(HashMap<String, String[]> params) throws Exception {
 
         Set<String> keys = params.keySet();
 
@@ -33,6 +32,7 @@ public class ModelParser {
             Iterable<String> objectNames = Splitter.on('.').split(key);
 
             for(String itemName : objectNames) {
+
                 Object itemInstance = isInModelTypes(itemName) ? findOrCreateInstance(itemName) : params.get(key)[0];
 
                 attrValueAndName.put(itemInstance, itemName);
@@ -48,7 +48,7 @@ public class ModelParser {
     }
 
     private String getClassName(String itemName) {
-        return packageName + StringUtils.capitalize(itemName);
+        return packageName + com.sun.xml.internal.ws.util.StringUtils.capitalize(itemName);
     }
 
     private Object findOrCreateInstance(String itemName) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -86,14 +86,20 @@ public class ModelParser {
         return modelTypeString.contains(getClassName(itemName));
     }
 
-    private  HashMap<String, Object> itemsAppliedAttributes(Stack items, HashMap<Object, String> valueAndName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private  HashMap<String, Object> itemsAppliedAttributes(Stack items, HashMap<Object, String> valueAndName) throws Exception {
         HashMap<String, Object> model = new HashMap<String, Object>();
 
         Object temp = items.pop();
         while(items.size() > 0) {
             Object item = items.pop();
             Class<?> itemClass = item.getClass();
-            itemClass.getMethod(getMethodName(valueAndName.get(temp)),temp.getClass()).invoke(item,temp);
+            if(temp.getClass().equals(String.class)) {
+                Class requiredClass = item.getClass().getDeclaredField(valueAndName.get(temp)).getType();
+                temp = StringUtils.toPrimitive(requiredClass, (String) temp);
+                itemClass.getMethod(getMethodName(valueAndName.get(temp.toString())),temp.getClass()).invoke(item,temp);
+            } else {
+                itemClass.getMethod(getMethodName(valueAndName.get(temp)),temp.getClass()).invoke(item,temp);
+            }
 
             model.put(valueAndName.get(item), item);
             temp = item;
@@ -103,6 +109,6 @@ public class ModelParser {
     }
 
     private  String getMethodName(String attrName) {
-        return "set" + StringUtils.capitalize(attrName);
+        return "set" + com.sun.xml.internal.ws.util.StringUtils.capitalize(attrName);
     }
 }

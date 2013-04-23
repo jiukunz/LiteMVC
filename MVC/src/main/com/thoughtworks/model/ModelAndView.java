@@ -1,14 +1,12 @@
 package com.thoughtworks.model;
 
-import com.thoughtworks.view.ViewResolver;
-
 public class ModelAndView {
 	private ModelMap modelMap;
-	private ViewResolver viewResolver;
+	private String viewName;
 
-	public ModelAndView(ModelMap modelMap, ViewResolver viewResolver) {
+	public ModelAndView(ModelMap modelMap, String viewName) {
 		this.modelMap = modelMap;
-		this.viewResolver = viewResolver;
+		this.viewName = viewName;
 	}
 
     public ModelMap getModelMap() {
@@ -19,11 +17,11 @@ public class ModelAndView {
         this.modelMap = modelMap;
     }
 
-    public ViewResolver getViewResolver() {
-        return viewResolver;
+    public String getViewName() {
+        return viewName;
     }
 
-    public void setViewResolver(ViewResolver viewResolver) {
-        this.viewResolver = viewResolver;
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 }

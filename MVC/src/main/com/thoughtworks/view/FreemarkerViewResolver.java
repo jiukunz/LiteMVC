@@ -15,7 +15,6 @@ import static com.google.common.collect.Maps.newHashMap;
 
 public class FreemarkerViewResolver implements ViewResolver {
     private final String viewPath;
-
     private Configuration config = new Configuration();
 
     public FreemarkerViewResolver(String viewPath) {
@@ -27,7 +26,7 @@ public class FreemarkerViewResolver implements ViewResolver {
         Map root = newHashMap();
         root.put("message", "Hello World!");
         try {
-            Template template = config.getTemplate("test.ftl");
+            Template template = config.getTemplate("test/test.ftl");
             response.setContentType("text/html; charset=" + template.getEncoding());
             Writer out = response.getWriter();
             template.process(root, out);

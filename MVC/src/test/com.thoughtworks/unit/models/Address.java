@@ -6,7 +6,6 @@ public class Address {
     private String location;
 
     public Address() {
-
     }
 
     public void setLocation(String location) {

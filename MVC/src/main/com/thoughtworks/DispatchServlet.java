@@ -1,9 +1,6 @@
 package com.thoughtworks;
 
-import com.thoughtworks.view.ViewResolver;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateException;
+import com.thoughtworks.view.FreemarkerViewResolver;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,27 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.Map;
-
-import static com.google.common.collect.Maps.newHashMap;
 
 public class DispatchServlet extends HttpServlet {
 
-    private Configuration config;
     private Injector injector;
-    private ViewResolver viewResolver;
+    private FreemarkerViewResolver viewResolver;
 
-    public DispatchServlet(Injector injector, ViewResolver viewResolver) {
+    public DispatchServlet(Injector injector, FreemarkerViewResolver viewResolver) {
         this.injector = injector;
         this.viewResolver = viewResolver;
     }
 
     @Override
     public void init() throws ServletException {
-        config = new Configuration();
         try {
-            config.setDirectoryForTemplateLoading(new File("./MVC/src/resources/templates"));
+            viewResolver.getConfig().setDirectoryForTemplateLoading(new File(viewResolver.getViewPath()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,39 +30,9 @@ public class DispatchServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Map root = newHashMap();
-        root.put("message", "Hello World!");
-        Template template;
-        System.out.println(System.getProperty("user.dir"));
-        template = config.getTemplate("test.ftl");
-        response.setContentType("text/html; charset=" + template.getEncoding());
-        Writer out = response.getWriter();
-        try {
-            template.process(root, out);
-        } catch (TemplateException e) {
-            throw new ServletException(
-                    "Error while processing FreeMarker template", e);
-        }
-//        String path = request.getPathInfo();
-//        String[] controllerAndMethod = path.split("/");
-//        String controllerName = "com.thoughtworks.app.controllers." + capitalize(controllerAndMethod[1]) + "Controller";
-//        String methodName = controllerAndMethod[2];
-//
-//        try {
-//            Class controllerClass = Class.forName(controllerName);
-//            Object controller = injector.getInstance(controllerClass);
-//            ModelAndView mv = (ModelAndView)controller.getClass().getMethod(methodName).invoke(controller);
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
+          viewResolver.render(null,request,response);
     }
 
-    private String capitalize(String s) {
-        return Character.toUpperCase(s.charAt(0)) + s.substring(1);
-    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //path => controller & action & model class

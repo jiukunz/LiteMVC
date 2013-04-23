@@ -14,6 +14,7 @@ public class ModelParser {
 
     private ArrayList<Class> modelTypes = new ArrayList<Class>();
     private String packageName;
+    private HashMap<String , Object> models = new HashMap<String, Object>();
 
     public ModelParser(Class<?> clazz, String packageName) {
 
@@ -23,43 +24,41 @@ public class ModelParser {
     }
 
     public  HashMap<String, Object> parse(HashMap<String, String[]> params) throws ClassNotFoundException, InstantiationException, IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        HashMap<String , Object> models = new HashMap<String, Object>();
+
         Set<String> keys = params.keySet();
 
         for(String key: keys) {
             Stack items = new Stack<Object>();
             HashMap<Object, String> attrValueAndName = new HashMap<Object, String>();
+            Iterable<String> objectNames = Splitter.on('.').split(key);
 
-            for(String item : Splitter.on('.').split(key)) {
-                String itemCapitalize = StringUtils.capitalize(item);
-                String itemClassName = packageName + itemCapitalize;
+            for(String itemName : objectNames) {
+                Object itemInstance = isInModelTypes(itemName) ? findOrCreateInstance(itemName) : params.get(key)[0];
 
-                if (isInModelTypes(itemClassName)) {
-
-                    Object itemInstance;
-                    if (models.containsKey(item)) {
-                        itemInstance = models.get(item);
-                    } else {
-                        itemInstance = Class.forName(itemClassName).newInstance();
-                    }
-
-                    attrValueAndName.put(itemInstance, item);
-                    items.push(itemInstance);
-
-                } else {
-
-                    attrValueAndName.put(params.get(key)[0], item);
-                    items.push(params.get(key)[0]);
-
-                }
+                attrValueAndName.put(itemInstance, itemName);
+                items.push(itemInstance);
 
             }
 
-            models.putAll(applyAttributes(items, attrValueAndName));
+            models.putAll(itemsAppliedAttributes(items, attrValueAndName));
 
         }
 
         return models;
+    }
+
+    private String getClassName(String itemName) {
+        return packageName + StringUtils.capitalize(itemName);
+    }
+
+    private Object findOrCreateInstance(String itemName) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+        Object itemInstance;
+        if (models.containsKey(itemName)) {
+            itemInstance = models.get(itemName);
+        } else {
+            itemInstance = Class.forName(getClassName(itemName)).newInstance();
+        }
+        return itemInstance;
     }
 
     private void setModelTypes(Class clazz){
@@ -78,16 +77,16 @@ public class ModelParser {
 
     }
 
-    private  boolean isInModelTypes(String itemClassName) {
+    private  boolean isInModelTypes(String itemName) {
         ArrayList<String> modelTypeString = new ArrayList<String>();
 
         for (Class clazz : modelTypes) {
             modelTypeString.add(clazz.toString().split(" ")[1]);
         }
-        return modelTypeString.contains(itemClassName);
+        return modelTypeString.contains(getClassName(itemName));
     }
 
-    private  HashMap<String, Object> applyAttributes(Stack items, HashMap<Object, String> valueAndName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private  HashMap<String, Object> itemsAppliedAttributes(Stack items, HashMap<Object, String> valueAndName) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         HashMap<String, Object> model = new HashMap<String, Object>();
 
         Object temp = items.pop();

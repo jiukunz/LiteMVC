@@ -1,7 +1,6 @@
 package com.thoughtworks;
 
 import com.thoughtworks.model.ModelAndView;
-import com.thoughtworks.model.ModelMap;
 import com.thoughtworks.module.IModule;
 import com.thoughtworks.view.ViewResolver;
 
@@ -32,13 +31,14 @@ public class DispatchServlet extends HttpServlet {
 
 //        ModelMap modelMap = new ModelMap();
 //        modelMap.addModel("result","hello world");
-        ModelMap modelMap = null;
+
+        ModelAndView modelAndView = null;
         try {
-            modelMap = new ActionHandler("com.thoughtworks.controller", FakeGuice.createInjector(module)).resolve(request, response).getModelMap();
+            Injector injector = FakeGuice.createInjector(module);
+            modelAndView = new ActionHandler("com.thoughtworks.controller", injector).resolve(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ModelAndView modelAndView = new ModelAndView(modelMap,"canYouRun.ftl");
         viewResolver.render(modelAndView,request,response);
     }
 }

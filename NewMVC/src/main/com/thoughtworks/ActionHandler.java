@@ -2,7 +2,7 @@ package com.thoughtworks;
 
 import com.google.common.base.Predicate;
 import com.sun.xml.internal.ws.util.StringUtils;
-import com.thoughtworks.ModelAndView;
+import com.thoughtworks.model.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,8 +36,7 @@ public class ActionHandler {
 
         Object paramModel = new ModelParser(action.getParameterTypes()[0], "com.thoughtworks.model.").parse(request.getParameterMap());
 
-        ModelAndView mv = (ModelAndView) action.invoke(controller, paramModel);
-        return mv;
+        return (ModelAndView) action.invoke(controller, paramModel);
     }
 
     private String getActionNameFromPath(String path) {

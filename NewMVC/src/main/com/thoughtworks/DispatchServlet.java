@@ -21,7 +21,7 @@ public class DispatchServlet extends HttpServlet {
         //Injector injector = FakeGuice.createInjector(module);
         //Controller controller = (Controller)inject.createInstance(Controller.class);//need package of controller
 
-        //process parameters using binder, and generate the model which is the parameter of action
+        //process request parameters using binder, and generate the model which is the parameter of action
         //ModelAndView modelAndView = controller.invoke(action).withparameter(model)
 
         //viewResolver.render(modelAndView)

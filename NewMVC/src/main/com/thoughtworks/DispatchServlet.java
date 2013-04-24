@@ -1,6 +1,9 @@
 package com.thoughtworks;
 
+import com.thoughtworks.model.ModelAndView;
+import com.thoughtworks.model.ModelMap;
 import com.thoughtworks.module.IModule;
+import com.thoughtworks.view.ViewResolver;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,8 @@ public class DispatchServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
         //path example: http://localhost:8080/controller/service
-        //Injector injector = FakeGuice.createInjector(module);
+//        Injector injector = FakeGuice.createInjector(module);
+
         //Controller controller = (Controller)inject.createInstance(Controller.class);//need package of controller
 
         //process request parameters using binder, and generate the model which is the parameter of action

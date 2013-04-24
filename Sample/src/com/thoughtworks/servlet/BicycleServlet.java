@@ -1,7 +1,7 @@
 package com.thoughtworks.servlet;
 
 import com.thoughtworks.DispatchServlet;
-import com.thoughtworks.ViewResolver;
+import com.thoughtworks.view.ViewResolver;
 import com.thoughtworks.annotation.Inject;
 import com.thoughtworks.module.IModule;
 

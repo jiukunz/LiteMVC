@@ -1,5 +1,7 @@
-package com.thoughtworks;
+package com.thoughtworks.view;
 
+import com.thoughtworks.model.ModelAndView;
+import com.thoughtworks.model.ModelMap;
 import com.thoughtworks.annotation.Inject;
 import freemarker.template.Configuration;
 import freemarker.template.Template;

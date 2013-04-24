@@ -1,7 +1,7 @@
 package com.thoughtworks.controller;
 
-import com.thoughtworks.ModelAndView;
-import com.thoughtworks.ModelMap;
+import com.thoughtworks.model.ModelAndView;
+import com.thoughtworks.model.ModelMap;
 import com.thoughtworks.annotation.Inject;
 import com.thoughtworks.model.Bicycle;
 import com.thoughtworks.service.RunService;

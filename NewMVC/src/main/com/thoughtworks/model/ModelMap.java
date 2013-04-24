@@ -1,4 +1,4 @@
-package com.thoughtworks;
+package com.thoughtworks.model;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.thoughtworks;
+package com.thoughtworks.model;
 
 public class ModelAndView {
 	private ModelMap modelMap;

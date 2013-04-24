@@ -1,7 +1,7 @@
 package com.thoughtworks.servlet;
 
-import com.thoughtworks.FreemarkerResolver;
-import com.thoughtworks.ViewResolver;
+import com.thoughtworks.view.FreemarkerResolver;
+import com.thoughtworks.view.ViewResolver;
 import com.thoughtworks.module.AbstractModule;
 import com.thoughtworks.module.BicycleModule;
 import com.thoughtworks.module.IModule;

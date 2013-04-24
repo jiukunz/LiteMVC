@@ -1,9 +1,13 @@
 package com.thoughtworks.model;
 
 public class Wheel {
-    private int radius;
+    private Integer radius;
 
-    public Wheel(int radius) {
+    public Wheel() {
+
+    }
+
+    public Wheel(Integer radius) {
         this.radius = radius;
     }
 
@@ -11,7 +15,7 @@ public class Wheel {
         return radius;
     }
 
-    public void setRadius(int radius) {
+    public void setRadius(Integer radius) {
         this.radius = radius;
     }
 }

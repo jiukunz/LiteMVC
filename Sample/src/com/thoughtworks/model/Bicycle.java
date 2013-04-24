@@ -2,7 +2,7 @@ package com.thoughtworks.model;
 
 public class Bicycle  {
     private Wheel wheel;
-    private int wheelNum;
+    private Integer wheelNum;
 
     public String shout() {
         StringBuilder sb = new StringBuilder();
@@ -12,7 +12,11 @@ public class Bicycle  {
         return sb.toString();
     }
 
-    public Bicycle(Wheel wheel, int wheelNum) {
+    public Bicycle() {
+
+    }
+
+    public Bicycle(Wheel wheel, Integer wheelNum) {
         this.wheel = wheel;
         this.wheelNum = wheelNum;
     }
@@ -29,7 +33,7 @@ public class Bicycle  {
         return wheelNum;
     }
 
-    public void setWheelNum(int wheelNum) {
+    public void setWheelNum(Integer wheelNum) {
         this.wheelNum = wheelNum;
     }
 }

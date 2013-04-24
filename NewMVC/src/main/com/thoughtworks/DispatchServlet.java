@@ -30,8 +30,14 @@ public class DispatchServlet extends HttpServlet {
 
         //viewResolver.render(modelAndView)
 
-        ModelMap modelMap = new ModelMap();
-        modelMap.addModel("result","hello world");
+//        ModelMap modelMap = new ModelMap();
+//        modelMap.addModel("result","hello world");
+        ModelMap modelMap = null;
+        try {
+            modelMap = new ActionHandler("com.thoughtworks.controller", FakeGuice.createInjector(module)).resolve(request, response).getModelMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ModelAndView modelAndView = new ModelAndView(modelMap,"canYouRun.ftl");
         viewResolver.render(modelAndView,request,response);
     }

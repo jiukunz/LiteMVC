@@ -12,7 +12,6 @@ public class BicycleServer {
         Injector injector = FakeGuice.createInjector(new BicycleServletModule());
 
         DispatchServlet servlet = (BicycleServlet)injector.getInstance(BicycleServlet.class);
-// equal       DispatchServlet servlet1 = new DispatchServlet(new BicycleModule(),new FreemarkerResolver());
 
         WebServer webServer = new WebServer(8080, servlet);
 

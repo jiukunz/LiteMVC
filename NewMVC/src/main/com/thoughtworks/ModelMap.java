@@ -22,4 +22,7 @@ public class ModelMap {
 		return this.modelMap.get(name);
 	}
 
+    public Map<String, Object> getModelMap() {
+        return modelMap;
+    }
 }

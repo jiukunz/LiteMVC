@@ -25,5 +25,10 @@ public class DispatchServlet extends HttpServlet {
         //ModelAndView modelAndView = controller.invoke(action).withparameter(model)
 
         //viewResolver.render(modelAndView)
+
+        ModelMap modelMap = new ModelMap();
+        modelMap.addModel("result","hello world");
+        ModelAndView modelAndView = new ModelAndView(modelMap,"canYouRun.ftl");
+        viewResolver.render(modelAndView,request,response);
     }
 }

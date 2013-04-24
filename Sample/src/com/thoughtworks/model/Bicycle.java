@@ -1,13 +1,10 @@
 package com.thoughtworks.model;
 
-import com.thoughtworks.service.RunService;
-
-public class Bicycle implements RunService {
+public class Bicycle  {
     private Wheel wheel;
     private int wheelNum;
 
-    @Override
-    public String run() {
+    public String shout() {
         StringBuilder sb = new StringBuilder();
         sb.append("I can run!!!!\n");
         sb.append("Because I have " + wheelNum + " wheel\n");

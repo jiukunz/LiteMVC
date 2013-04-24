@@ -17,6 +17,13 @@ public class DispatchServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
+        //path example: http://localhost:8080/controller/service
+        //Injector injector = FakeGuice.createInjector(module);
+        //Controller controller = (Controller)inject.createInstance(Controller.class);//need package of controller
 
+        //process parameters using binder, and generate the model which is the parameter of action
+        //ModelAndView modelAndView = controller.invoke(action).withparameter(model)
+
+        //viewResolver.render(modelAndView)
     }
 }

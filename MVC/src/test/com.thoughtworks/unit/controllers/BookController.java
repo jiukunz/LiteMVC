@@ -36,7 +36,7 @@ public class BookController {
 
     public ModelAndView show(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mv = new ModelAndView(new ModelMap(), "show.ftl");
-        mv.getModelMap().addModel("Book", new Book("Java",new Author("Jack", new Address("abc"), 34)));
+        mv.getModelMap().addModel("book", new Book("Java",new Author("Jack", new Address("abc"), 34)));
         return mv;
     }
 
@@ -44,7 +44,7 @@ public class BookController {
         ModelAndView mv = new ModelAndView(new ModelMap(), "create.ftl");
         ModelParser parser = new ModelParser(Book.class, "com.thoughtworks.unit.models.");
         Book book = (Book) parser.parse(request.getParameterMap()).get("book");
-        mv.getModelMap().addModel("Book",book);
+        mv.getModelMap().addModel("book",book);
         return mv;
     }
 

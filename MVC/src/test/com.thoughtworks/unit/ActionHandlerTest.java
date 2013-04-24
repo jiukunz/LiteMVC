@@ -31,8 +31,8 @@ public class ActionHandlerTest {
         ModelAndView mv = actionHandler.resolve(request, response);
 
         assertThat(mv.getViewName(), is("show.ftl"));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getName(), is("Java"));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getAuthor().getName(), is("Jack"));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getName(), is("Java"));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getAuthor().getName(), is("Jack"));
 
     }
 
@@ -57,10 +57,10 @@ public class ActionHandlerTest {
         ModelAndView mv = actionHandler.resolve(request, response);
 
         assertThat(mv.getViewName(), is("create.ftl"));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getName(), is("Java"));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getAuthor().getName(), is("Jack"));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getAuthor().getAge(), is(38));
-        assertThat(((Book)mv.getModelMap().getModel("Book")).getAuthor().getAddress().getLocation(), is("1st, Street, Richmond"));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getName(), is("Java"));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getAuthor().getName(), is("Jack"));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getAuthor().getAge(), is(38));
+        assertThat(((Book)mv.getModelMap().getModel("book")).getAuthor().getAddress().getLocation(), is("1st, Street, Richmond"));
 
     }
 }

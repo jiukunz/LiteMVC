@@ -31,8 +31,13 @@ public class DispatchServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        viewResolver.render(null,request,response);
+        ModelAndView mv = null;
+        try {
+            mv = new ActionHandler("com.thoughtworks.unit.controllers", injector).resolve(request,response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        viewResolver.render(mv,request,response);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.thoughtworks.view;
 
 import com.thoughtworks.model.ModelAndView;
+import com.thoughtworks.model.ModelMap;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.google.common.collect.Maps.newHashMap;
@@ -23,13 +25,12 @@ public class FreemarkerViewResolver implements ViewResolver {
 
     @Override
     public void render(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
-        Map root = newHashMap();
-        root.put("message", "Hello World!");
+        ModelMap modelMap = modelAndView.getModelMap();
         try {
-            Template template = config.getTemplate("test/test.ftl");
+            Template template = config.getTemplate(modelAndView.getViewName());
             response.setContentType("text/html; charset=" + template.getEncoding());
             Writer out = response.getWriter();
-            template.process(root, out);
+            template.process(modelMap.getModelMap(), out);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (TemplateException e) {

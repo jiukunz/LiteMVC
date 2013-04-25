@@ -3,6 +3,7 @@ package com.thoughtworks;
 import com.google.common.base.Predicate;
 import com.sun.xml.internal.ws.util.StringUtils;
 import com.thoughtworks.annotation.Inject;
+import com.thoughtworks.annotation.Post;
 import com.thoughtworks.model.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +43,13 @@ public class ActionHandler {
             }
         });
 
-        Object paramModel = new ModelParser(action.getParameterTypes()[0]).parse(request);
+        if(action.getAnnotation(Post.class) != null){
+            Object paramModel = new ModelParser(action.getParameterTypes()[0]).parse(request);
+            return (ModelAndView) action.invoke(controller, paramModel);
+        } else {
+            return (ModelAndView) action.invoke(controller);
+        }
 
-        return (ModelAndView) action.invoke(controller, paramModel);
     }
 
     private String getActionNameFromPath(String path) {

@@ -18,7 +18,16 @@ public class DispatchServlet extends HttpServlet {
     }
 
     @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response){
+        doDispatch(request, response);
+    }
+
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response){
+        doDispatch(request, response);
+    }
+
+    private void doDispatch(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView modelAndView = null;
         try {
             Injector injector = FakeGuice.createInjector(module);

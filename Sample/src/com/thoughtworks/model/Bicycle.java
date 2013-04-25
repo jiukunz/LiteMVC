@@ -13,7 +13,6 @@ public class Bicycle  {
     }
 
     public Bicycle() {
-
     }
 
     public Bicycle(Wheel wheel, Integer wheelNum) {

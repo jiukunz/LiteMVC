@@ -34,7 +34,7 @@ public class ActionHandler {
             }
         });
 
-        Object paramModel = new ModelParser(action.getParameterTypes()[0], "com.thoughtworks.model.").parse(request.getParameterMap());
+        Object paramModel = new ModelParser(action.getParameterTypes()[0]).parse(request);
 
         return (ModelAndView) action.invoke(controller, paramModel);
     }

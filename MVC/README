@@ -1,4 +1,6 @@
 TO DO LIST:
-1.Path to Controller Map
-2.Refactor data binder
-3.Should the servlet hold the viewResolver? No. The controller should have the ability to render different views, such as json, freemarker etc.
+1.Path to Controller Map,
+2.Should the servlet hold the viewResolver? No. The controller should have the ability to render different views, such as json, freemarker etc.
+3.Implement multiple http request type, such as put,delete,get,etc.
+4.
+

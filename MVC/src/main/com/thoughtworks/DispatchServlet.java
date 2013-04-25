@@ -25,7 +25,6 @@ public class DispatchServlet extends HttpServlet {
             ActionHandler actionHandler = (ActionHandler) injector.getInstance(ActionHandler.class);
             actionHandler.setInjector(injector);
             modelAndView = actionHandler.resolve(request,response);
-//            modelAndView = new ActionHandler(injector).resolve(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

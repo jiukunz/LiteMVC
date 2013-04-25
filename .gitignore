@@ -3,4 +3,5 @@
 LiteMVC.i*
 *.iml
 out/
+*build/
 

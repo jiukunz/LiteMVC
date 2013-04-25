@@ -22,7 +22,10 @@ public class DispatchServlet extends HttpServlet {
         ModelAndView modelAndView = null;
         try {
             Injector injector = FakeGuice.createInjector(module);
-            modelAndView = new ActionHandler("com.thoughtworks.controller", injector).resolve(request, response);
+            ActionHandler actionHandler = (ActionHandler) injector.getInstance(ActionHandler.class);
+            actionHandler.setInjector(injector);
+            modelAndView = actionHandler.resolve(request,response);
+//            modelAndView = new ActionHandler(injector).resolve(request, response);
         } catch (Exception e) {
             e.printStackTrace();
         }

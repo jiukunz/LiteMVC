@@ -2,6 +2,7 @@ package com.thoughtworks;
 
 import com.google.common.base.Predicate;
 import com.sun.xml.internal.ws.util.StringUtils;
+import com.thoughtworks.annotation.Inject;
 import com.thoughtworks.model.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,12 +14,19 @@ import static com.google.common.collect.Iterables.find;
 
 public class ActionHandler {
 
-    private final String packageName;
     private Injector injector;
+    private ICustomerConfig config;
 
-    public ActionHandler(String packageName, Injector injector) {
-        this.packageName = packageName;
+    public ActionHandler() {}
+
+    public void setInjector(Injector injector){
         this.injector = injector;
+    }
+
+    @Inject
+    public void setConfig(ICustomerConfig config) {
+        this.config = config;
+        config.config();
     }
 
     public ModelAndView resolve(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -45,7 +53,7 @@ public class ActionHandler {
 
     private Class getControllerClassFromPath(String path) throws ClassNotFoundException {
         String controllerName = StringUtils.capitalize(path.split("/")[1]) + "Controller";
-        String className = packageName + "." + controllerName;
+        String className = config.getPackageName() + "." + controllerName;
         return Class.forName(className);
     }
 }

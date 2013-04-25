@@ -1,5 +1,6 @@
 package com.thoughtworks.servlet;
 
+import com.thoughtworks.ICustomerConfig;
 import com.thoughtworks.view.FreemarkerResolver;
 import com.thoughtworks.view.ViewResolver;
 import com.thoughtworks.module.AbstractModule;

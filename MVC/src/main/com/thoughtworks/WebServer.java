@@ -16,7 +16,7 @@ public class WebServer {
         this.servlet = servlet;
     }
 
-    public void run() throws Exception {
+    public void start() throws Exception {
         Server server = new Server(port);
         Context context = new Context(server, "/");
         context.addServlet(new ServletHolder(servlet), "/*");

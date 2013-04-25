@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface ViewResolver {
     void render(ModelAndView modelAndView,
-                                HttpServletRequest request,
-                                HttpServletResponse response
-    ) throws Exception;
+                HttpServletRequest request,
+                HttpServletResponse response
+    );
 }

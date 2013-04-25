@@ -1,7 +1,8 @@
 package com.thoughtworks;
 
 import com.google.common.base.Splitter;
-import com.thoughtworks.utils.StringUtils;
+import com.google.common.collect.Iterables;
+import com.thoughtworks.StringUtils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -11,17 +12,25 @@ public class ModelParser {
     private ArrayList<Class> modelTypes = new ArrayList<Class>();
     private String packageName;
     private HashMap<String , Object> models = new HashMap<String, Object>();
+    private Class clazz;
 
     public ModelParser(Class<?> clazz, String packageName) {
 
-       this.packageName = packageName;
-       setModelTypes(clazz);
+        this.packageName = packageName;
+        setModelTypes(clazz);
+        this.clazz = clazz;
 
     }
 
-    public  HashMap<String, Object> parse(Map<String, String[]> params) throws Exception {
+    public Object parse(Map<String, String[]> params) throws Exception {
 
         Set<String> keys = params.keySet();
+        String modelName = "";
+
+        String firstKey = Iterables.get(keys, 0);
+        Iterable<String> names = Splitter.on('.').split(firstKey);
+        modelName = Iterables.get(names, 0);
+        models.put(modelName, clazz.newInstance());
 
         for(String key: keys) {
             Stack items = new Stack<Object>();
@@ -41,7 +50,7 @@ public class ModelParser {
 
         }
 
-        return models;
+        return models.get(modelName);
     }
 
     private String getClassName(String itemName) {
@@ -68,7 +77,6 @@ public class ModelParser {
         Field[] fields =  clazz.getDeclaredFields();
 
         for(Field field : fields) {
-            modelTypes.add(field.getType());
             setModelTypes(field.getType());
         }
 

@@ -1,11 +1,15 @@
 package com.thoughtworks;
 
+import com.google.common.base.Predicate;
 import com.sun.xml.internal.ws.util.StringUtils;
 import com.thoughtworks.model.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+
+import static com.google.common.collect.Iterables.find;
 
 public class ActionHandler {
 
@@ -19,22 +23,29 @@ public class ActionHandler {
 
     public ModelAndView resolve(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String path = request.getPathInfo();
-        String className = getControllerClassFromPath(path);
-        Class controllerClass = Class.forName(className);
+        Class controllerClass = getControllerClassFromPath(path);
         Object controller = injector.getInstance(controllerClass);
-        String actionName = getActionNameFromPath(path);
-        Method action = controllerClass.getMethod(actionName, HttpServletRequest.class, HttpServletResponse.class);
-        ModelAndView mv = (ModelAndView) action.invoke(controller, request, response);
-        return mv;
+        final String actionName = getActionNameFromPath(path);
+
+        Method action = find(Arrays.asList(controllerClass.getMethods()), new Predicate<Method>() {
+            @Override
+            public boolean apply(Method method) {
+                return method.getName().equals(actionName);
+            }
+        });
+
+        Object paramModel = new ModelParser(action.getParameterTypes()[0], "com.thoughtworks.model.").parse(request.getParameterMap());
+
+        return (ModelAndView) action.invoke(controller, paramModel);
     }
 
     private String getActionNameFromPath(String path) {
         return path.split("/")[2];
     }
 
-    private String getControllerClassFromPath(String path) {
-        String[] controllerAndMethod = path.split("/");
-        String controllerName = StringUtils.capitalize(controllerAndMethod[1]) + "Controller";
-        return packageName + "." + controllerName;
+    private Class getControllerClassFromPath(String path) throws ClassNotFoundException {
+        String controllerName = StringUtils.capitalize(path.split("/")[1]) + "Controller";
+        String className = packageName + "." + controllerName;
+        return Class.forName(className);
     }
 }

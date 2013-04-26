@@ -2,5 +2,5 @@ TO DO LIST:
 1.Path to Controller Map,
 2.Should the servlet hold the viewResolver? No. The controller should have the ability to render different views, such as json, freemarker etc.
 3.Implement multiple http request type, such as put,delete,get,etc.
-4.
+4.How to restrict user's logic in service rather than controller ?
 

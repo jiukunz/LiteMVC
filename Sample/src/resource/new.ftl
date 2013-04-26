@@ -4,7 +4,7 @@
     <title></title>
 </head>
 <body>
-Create a new simple book
+Create a new simple Bicycle
 <form action="/bicycle/create" method="post">
     <label for="bicycle.wheel.radius">Wheel radius</label>
     <input id="bicycle.wheel.radius" name="bicycle.wheel.radius" type="text"/>

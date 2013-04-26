@@ -1,4 +1,4 @@
-package com.thoughtworks.main;
+package com.thoughtworks.server;
 
 import com.thoughtworks.DispatchServlet;
 import com.thoughtworks.FakeGuice;
